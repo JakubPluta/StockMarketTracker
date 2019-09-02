@@ -1,0 +1,44 @@
+import quandl
+import pandas as pd
+import datetime as dt
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 200)
+pd.options.mode.chained_assignment = None
+
+
+api_key = open(r'D:\PycharmProjects\apikey.txt').read()
+
+def CleanTickers():
+    ''' Main Goal is to Exclude all companies which were'nt quotated for period longer then 30 days back since today
+    and also to extract isin number for other purpose like scrape data about company'''
+
+    ticker_list = pd.read_csv(r'WSE_metadata.csv')
+    back_30days = dt.date.today() - dt.timedelta(days=30) # get only companies which are quotated
+    tickers = ticker_list[ticker_list['to_date']>str(back_30days)]
+    tickers['ISIN'] = tickers['name'].str.split(', ',expand=True)[1].str.strip()
+    tickers['StockExchange'] = 'WSE'
+    tickers = tickers[['StockExchange','code','ISIN']]
+    #tickers.to_csv(f'{tickers.iloc[0][0]}_tickers.csv') # uncomment if you want to save cleaned data to csv file
+    return tickers
+
+
+def GetData(ticker,start='2015-01-01'):
+    df = quandl.get("WSE/"+ticker,authtoken=api_key,start_date=start,index_col='Date')
+    df = df[['Close','Volume']]
+    #df_cv = df[['Close','Volume']]
+    return df
+
+sample = CleanTickers()
+#print(sample['code'].tolist())
+
+
+fin = GetData('CDPROJEKT',start='2017-01-01')
+print(fin.head())
+
+#TODO:
+# 1. Wskaźniki zwrotu z akcji tj. odchylenie standardowe, średnia stopa zwrotu 1m, 3m, 6m, 12m, IR, Tracking Error, jako benchmark wig20 lub wig20
+# 2. Porównania do benchmarku
+# 3. Stworzenie wykresów
+# 4. Pobranie podstawowych informacji o spółce i zamieszczenie na dashboardzie
+# 5. Zbudowanie prostego modelu prognostycznego ? 
