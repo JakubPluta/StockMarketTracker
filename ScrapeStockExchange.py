@@ -10,7 +10,7 @@ pd.options.mode.chained_assignment = None
 api_key = open(r'D:\PycharmProjects\apikey.txt').read()
 
 def CleanTickers():
-    ''' Main Goal is to Exclude all companies which were'nt quotated for period longer then 30 days back since today
+    ''' Main Goal is to Exclude all companies which weren't quotated for period longer then 30 days back since today
     and also to extract isin number for other purpose like scrape data about company'''
 
     ticker_list = pd.read_csv(r'WSE_metadata.csv')
@@ -23,22 +23,29 @@ def CleanTickers():
     return tickers
 
 
-def GetData(ticker,start='2015-01-01'):
+def GetData(ticker,start='2017-01-01'):
+    '''Simple Function that get stock data by given ticker an start date'''
     df = quandl.get("WSE/"+ticker,authtoken=api_key,start_date=start,index_col='Date')
-    df = df[['Close','Volume']]
+    if ticker in ['WIG', 'WIG20', 'WIG30']: # There is a problem when we look at index like WIG, WIG20 etc. Then there is no columns Volume but Turnover
+        df = df[['Open', 'High', 'Low', 'Close', 'Turnover (1000s)']]
+        df.rename(columns={'Turnover (1000s)':'Volume'},inplace=True)
+    else:
+        df = df[['Open','High','Low','Close','Volume']]
     #df_cv = df[['Close','Volume']]
     return df
+
 
 sample = CleanTickers()
 #print(sample['code'].tolist())
 
 
-fin = GetData('CDPROJEKT',start='2017-01-01')
-print(fin.head())
 
 #TODO:
 # 1. Wskaźniki zwrotu z akcji tj. odchylenie standardowe, średnia stopa zwrotu 1m, 3m, 6m, 12m, IR, Tracking Error, jako benchmark wig20 lub wig20
 # 2. Porównania do benchmarku
 # 3. Stworzenie wykresów
 # 4. Pobranie podstawowych informacji o spółce i zamieszczenie na dashboardzie
-# 5. Zbudowanie prostego modelu prognostycznego ? 
+# 5. Zbudowanie prostego modelu prognostycznego ?
+
+
+
