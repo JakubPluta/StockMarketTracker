@@ -7,7 +7,7 @@ from ScrapeStockExchange import GetData as GD
 import plotly.graph_objs as go
 from BolingerBands import bolinger, daily_return, get_colors
 import pandas as pd
-
+from return_rates import return_rates as rr, clrs
 
 external_sheet1 = ['https://cdn.rawgit.com/plotly/dash-app-stylesheets/2d266c578d2a6e8850ebce48fdb52759b2aef506/stylesheet-oil-and-gas.css']
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -21,7 +21,7 @@ app = dash.Dash('Stock Market',external_stylesheets=external_sheet1)
 
 app.layout = html.Div([
 html.Div([
-  # Title - Row
+
   html.Div(
     [
       html.H1(
@@ -69,9 +69,13 @@ html.Div([
 
         ], className="four columns"),
 
-    ],className="row")
-]),])
+    ],className="row"),
+html.Div([html.H5('Return Rates'),
+            dcc.Graph(
+                 id="stock-graph3")
 
+        ], className="four columns"),
+]),])
 
 
 
@@ -293,7 +297,46 @@ def update_graph2(selected_dropdown_value):
 
 #######################################################
 
+@app.callback(Output('stock-graph3', 'figure'), [Input('stock-dropdown', 'value')])
+def update_graph3(selected_dropdown_value):
+    # read stock price data from google-finance
+    df = GD(str(selected_dropdown_value), start='2018-01-01')
+    df.replace(to_replace=0, method='bfill',inplace=True)
+    df = rr(df)
+    clr = clrs(df)
 
+
+    returns = {
+        'name': str(selected_dropdown_value),
+        'type': 'bar'
+        #'mode':'bar',
+        ,'text' : df['Return_Rates'],
+        'textposition' : 'auto',
+
+        'x': df.index,
+        'y': df['Return_Rates'],
+        'yaxis': 'y',
+
+        'marker': {"color": clr} }
+
+    layout =  { "yaxis": {
+            "domain": [0.1, 0.9],
+            "showticklabels": True
+        },
+
+
+    "margin": {
+        "b": 5,
+        "l": 40,
+        "r": 40,
+        "t": 10
+    },
+
+
+    }
+    return {'data': [returns],
+            'layout': layout
+            }
 
 
 

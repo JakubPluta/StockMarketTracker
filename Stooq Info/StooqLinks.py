@@ -12,16 +12,6 @@ from bs4 import BeautifulSoup
 
 
 
-# urls = ['https://stooq.com/t/?i=523&v=0&l=1','https://stooq.com/t/?i=523&v=0&l=2','https://stooq.com/t/?i=523&v=0&l=3','https://stooq.com/t/?i=523&v=0&l=4','https://stooq.com/t/?i=523&v=0&l=5','https://stooq.com/t/?i=523&v=0&l=6']
-#
-# url = 'https://stooq.com/t/?i=523&v=0&l=1'
-#
-# page = requests.get(url)
-# soup = BeautifulSoup(page.content, 'html.parser')
-# #print(soup.find('table',attrs={'class':'fth1'}))
-# table = soup.find('table',attrs={'class':'fth1'})
-# f13 = table.find_all(id='f13')
-
 def stooq_links():
     urls = ['https://stooq.com/t/?i=523&v=0&l=1', 'https://stooq.com/t/?i=523&v=0&l=2',
             'https://stooq.com/t/?i=523&v=0&l=3', 'https://stooq.com/t/?i=523&v=0&l=4',
@@ -46,8 +36,8 @@ def stooq_links():
 
 
 
+#
+# stooqs = stooq_links()
+# stooqs = pd.DataFrame(stooqs)
+# stooqs.to_csv('CompaniesLinks.csv')
 
-stooqs = stooq_links()
-stooqs = pd.DataFrame(stooqs)
-stooqs.to_csv('CompaniesLinks.csv')
-print(stooqs)

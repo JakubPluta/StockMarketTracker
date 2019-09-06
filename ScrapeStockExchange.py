@@ -5,7 +5,7 @@ pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 200)
 pd.options.mode.chained_assignment = None
-
+import re
 
 api_key = open(r'D:\PycharmProjects\apikey.txt').read()
 
@@ -22,11 +22,13 @@ def CleanTickers():
     #tickers.to_csv(f'{tickers.iloc[0][0]}_tickers.csv') # uncomment if you want to save cleaned data to csv file
     return tickers
 
+wigs = ['MWIG40', 'MWIG40DVP', 'MWIG40TR', 'SWIG80', 'SWIG80DVP', 'SWIG80TR', 'WIG20', 'WIG20DVP', 'WIG20LEV', 'WIG20SHORT', 'WIG20TR', 'WIG30', 'WIG30TR', 'WIG_BANKI', 'WIG_BUDOW', 'WIG_CEE', 'WIG_CHEMIA', 'WIGDIV', 'WIG_ENERG', 'WIG_GAMES', 'WIG_GORNIC', 'WIG_INFO', 'WIG_LEKI', 'WIG_MEDIA', 'WIG_MOTO', 'WIG_MS_BAS', 'WIG_MS_FIN', 'WIG_MS_PET', 'WIG_NRCHOM', 'WIG_ODZIEZ', 'WIG_PALIWA', 'WIG_POLAND', 'WIG_SPOZYW', 'WIGTECH', 'WIG_TELKOM', 'WIG_UKRAIN','WIG']
+
 
 def GetData(ticker,start='2017-01-01'):
     '''Simple Function that get stock data by given ticker an start date'''
     df = quandl.get("WSE/"+ticker,authtoken=api_key,start_date=start,index_col='Date')
-    if ticker in ['WIG', 'WIG20', 'WIG30']: # There is a problem when we look at index like WIG, WIG20 etc. Then there is no columns Volume but Turnover
+    if ticker in wigs: # There is a problem when we look at index like WIG, WIG20 etc. Then there is no columns Volume but Turnover
         df = df[['Open', 'High', 'Low', 'Close', 'Turnover (1000s)']]
         df.rename(columns={'Turnover (1000s)':'Volume'},inplace=True)
     else:
@@ -40,12 +42,8 @@ sample = CleanTickers()
 
 
 
-#TODO:
-# 1. Wskaźniki zwrotu z akcji tj. odchylenie standardowe, średnia stopa zwrotu 1m, 3m, 6m, 12m, IR, Tracking Error, jako benchmark wig20 lub wig20
-# 2. Porównania do benchmarku
-# 3. Stworzenie wykresów
-# 4. Pobranie podstawowych informacji o spółce i zamieszczenie na dashboardzie
-# 5. Zbudowanie prostego modelu prognostycznego ?
+
+
 
 
 

@@ -11,9 +11,25 @@ import bs4
 from bs4 import BeautifulSoup
 from StooqLinks import stooq_links
 
-stooqs = stooq_links()
+stooqs = pd.read_csv('CompaniesLinks.csv')
+stooqs = stooqs.reset_index()
+stooqs.columns = list('abc')
+stooqs = stooqs['c'].to_list()
 
-for i in stooqs[:20]:
+
+# Code = []
+# Market_capitalization = []
+# Booking_Value   = []
+# P_BV = []
+# Return_Rate_1W  = []
+# Return_Rate_1M  = []
+# Return_Rate_3M  = []
+# Return_Rate_6M  = []
+# Return_Rate_YTD  = []
+# Return_Rate_1Y = []
+
+
+for i in stooqs[:4]:
     u = i
    # u = 'https://stooq.com/q/g/?s=cfg'
     e = u[-3:]
@@ -35,4 +51,4 @@ for i in stooqs[:20]:
         }, inplace=True)
     except:
         pass
-    print(result)
+
