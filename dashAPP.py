@@ -1,4 +1,5 @@
 import dash
+import datetime as dt
 import dash_core_components as dcc
 import dash_html_components as html
 from dash_core_components import Input
@@ -8,6 +9,8 @@ import plotly.graph_objs as go
 from BolingerBands import bolinger, daily_return, get_colors
 import pandas as pd
 from return_rates import return_rates as rr, clrs
+from GetNews import Table,get_news
+
 
 external_sheet1 = ['https://cdn.rawgit.com/plotly/dash-app-stylesheets/2d266c578d2a6e8850ebce48fdb52759b2aef506/stylesheet-oil-and-gas.css']
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -74,7 +77,18 @@ html.Div([html.H5('Return Rates'),
             dcc.Graph(
                  id="stock-graph3")
 
-        ], className="four columns"),
+        ], className='four columns'),
+
+
+
+         html.Div([html.H5(f'Warsaw Stock Exchange News {str(dt.date.today())}'),
+                   Table(get_news())
+                   ], className="six columns",style = {
+                                    'fontSize' : '12px',
+
+                                    'padding-right' : '200px'
+                                    }),
+
 ]),])
 
 
