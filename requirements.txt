@@ -113,7 +113,6 @@ msgpack==0.6.1
 msgpack-numpy==0.4.3.2
 multitasking==0.0.7
 munch==2.3.2
-nb-black==1.0.3
 nbconvert==5.4.1
 nbformat==4.4.0
 notebook==5.7.6
