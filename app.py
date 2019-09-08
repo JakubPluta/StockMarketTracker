@@ -81,13 +81,13 @@ html.Div([html.H5('Return Rates'),
 
 
 
-         html.Div([html.H5(f'Warsaw Stock Exchange News {str(dt.date.today())}'),
-                   Table(get_news())
-                   ], className="six columns",style = {
-                                    'fontSize' : '12px',
-
-                                    'padding-right' : '200px'
-                                    }),
+         # html.Div([html.H5(f'Warsaw Stock Exchange News {str(dt.date.today())}'),
+         #           Table(get_news())
+         #           ], className="six columns",style = {
+         #                            'fontSize' : '12px',
+         #
+         #                            'padding-right' : '200px'
+         #                            }),
 
 ]),])
 
