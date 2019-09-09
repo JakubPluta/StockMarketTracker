@@ -6,9 +6,10 @@ pd.set_option('display.max_columns', 500)
 pd.set_option('display.width', 200)
 pd.options.mode.chained_assignment = None
 import re
+import os
 
 #api_key = open(r'apikey.txt').read()
-api_key = 'Ayb8gS18v4atPFaehV8U'
+api_key = os.environ.get('API')
 def CleanTickers():
     ''' Main Goal is to Exclude all companies which weren't quotated for period longer then 30 days back since today
     and also to extract isin number for other purpose like scrape data about company'''
