@@ -21,6 +21,7 @@ ticker_list = tickers['code'][2:].to_list()
 opts = [{'label' : i, 'value' : i} for i in ticker_list]
 
 app = dash.Dash('Stock Market',external_stylesheets=external_sheet1)
+server = app.server
 
 app.layout = html.Div([
 html.Div([
