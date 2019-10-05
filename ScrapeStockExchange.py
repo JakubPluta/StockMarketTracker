@@ -38,8 +38,6 @@ def GetData(ticker,start='2017-01-01'):
     return df
 
 
-#sample = CleanTickers()
-
 
 
 
