@@ -8,7 +8,7 @@ pd.options.mode.chained_assignment = None
 import re
 import os
 
-#api_key = open(r'apikey.txt').read()
+
 api_key = os.environ.get('API')
 def CleanTickers():
     ''' Main Goal is to Exclude all companies which weren't quotated for period longer then 30 days back since today
