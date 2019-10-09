@@ -312,7 +312,7 @@ def update_graph2(selected_dropdown_value):
             'layout': layout
             }
 
-#######################################################
+#callback
 
 @app.callback(Output('stock-graph3', 'figure'), [Input('stock-dropdown', 'value')])
 def update_graph3(selected_dropdown_value):
