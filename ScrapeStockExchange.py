@@ -9,7 +9,8 @@ import re
 import os
 
 
-api_key = os.environ.get('API')
+api_key = os.environ.get('API_KEY')
+
 def CleanTickers():
     ''' Main Goal is to Exclude all companies which weren't quotated for period longer then 30 days back since today
     and also to extract isin number for other purpose like scrape data about company'''
