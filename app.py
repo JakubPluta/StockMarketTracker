@@ -6,6 +6,7 @@ from dash_core_components import Input
 from dash.dependencies import Input,Output,State
 from ScrapeStockExchange import GetData as GD
 import plotly.graph_objs as go
+import plotly.plotly as py
 from BolingerBands import bolinger, daily_return, get_colors
 import pandas as pd
 import os
